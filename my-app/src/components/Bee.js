@@ -27,21 +27,25 @@ export default function Bee(props) {
     setScore(0);
   }
 
-  function Workers(score) {
+  function Lost(score) {
     setHealthIcon("💔");
     setScore();
-    return setMessage("DEAD 😵");
+    return setMessage(`DEAD 😵 YOU SCORED ${score}%`);
   }
 
   if (props.name === "Workers" && score <= 70) {
-    Workers(score);
+    Lost(score);
+  } else if (props.name === "Drones" && score <= 50) {
+    Lost(score);
+  } else if (props.name === "The Queen" && score <= 20) {
+    Lost(score);
   }
-
   function Reset(event) {
     event.preventDefault();
     setScore(props.initialValues.initialScore);
     setAttackValue(props.initialValues.attackNumber);
     setMessage("");
+    setHealthIcon("❤️");
   }
   return (
     <div className='Bee'>
@@ -56,10 +60,9 @@ export default function Bee(props) {
         <li>Stay Above {props.minHealth}%!</li>
         <li>{message}</li>
       </ul>
-      <button onClick={handleAttack}>Attack</button>
-      <button onClick={getRandomNumber}>Roll Dice</button>
-
-      <button onClick={Reset}>Reset</button>
+      <button onClick={getRandomNumber}>Roll Dice 🎲</button>
+      <button onClick={handleAttack}>Attack 💥</button>
+      <button onClick={Reset}>Reset ✅</button>
     </div>
   );
 }
