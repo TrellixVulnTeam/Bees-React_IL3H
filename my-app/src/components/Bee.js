@@ -30,7 +30,7 @@ export default function Bee(props) {
   function Lost(score) {
     setHealthIcon("💔");
     setScore();
-    return setMessage(`DEAD 😵 YOU SCORED ${score}%`);
+    return setMessage(`DEAD 😵❗️ YOU SCORED ${score}%`);
   }
 
   if (props.name === "Workers" && score <= 70) {
@@ -56,13 +56,17 @@ export default function Bee(props) {
       <h1 className='Bee__header'>
         {healthIcon} {score}%
       </h1>
-      <ul>
-        <li>Stay Above {props.minHealth}%!</li>
-        <li>{message}</li>
-      </ul>
-      <button onClick={getRandomNumber}>Roll Dice 🎲</button>
-      <button onClick={handleAttack}>Attack 💥</button>
-      <button onClick={Reset}>Reset ✅</button>
+      <h2 className='Bee__subheader'>Stay Above {props.minHealth}%</h2>
+      <button className='Bee__btn' onClick={getRandomNumber}>
+        Roll Dice 🎲
+      </button>
+      <button className='Bee__btn' onClick={handleAttack}>
+        Attack 💥
+      </button>
+      <button className='Bee__btn' onClick={Reset}>
+        Reset ✅
+      </button>
+      <p className='Bee__message'>{message}</p>
     </div>
   );
 }
