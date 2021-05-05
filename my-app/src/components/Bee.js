@@ -1,55 +1,64 @@
 import React, { useState } from "react";
+import beeIcon from "../images/bee.png";
 import "../sass/Bee.scss";
 
 export default function Bee(props) {
-  const [health, setHealth] = useState(100);
-  const [healthIcon, setHealthIcon] = useState("❤️");
-  const [attackNumber, setAttackNumber] = useState("");
+  let [score, setScore] = useState(props.initialValues.initialScore);
+  let [attackValue, setAttackValue] = useState(
+    props.initialValues.attackNumber
+  );
+  let [message, setMessage] = useState();
+  let [healthIcon, setHealthIcon] = useState("❤️");
 
-  function handleResponse(attackNumber) {
-    if (health && props.name === "Workers") {
-      let score = health - attackNumber;
-      score >= 70 ? setHealth(score) : setHealth(health);
-    }
+  console.log(attackValue);
 
-    // if (health <= 0) {
-    //   console.log("you won!");
-    // if (newScore <= 0) {
-    //   setHealth(0);
-    //   setHealthIcon("💔");
-    // }
-    // newScore <= 0 ? setHealth(0) : setHealth(newScore);
+  function handleAttack(event) {
+    event.preventDefault();
+    setScore(score - attackValue);
+  }
+
+  function getRandomNumber(event) {
+    event.preventDefault();
+    setAttackValue(Math.trunc(Math.random() * 100) + 1);
+    console.log(attackValue);
+  }
+
+  if (score < 0) {
+    setScore(0);
+  }
+
+  function Workers(score) {
+    setHealthIcon("💔");
+    setScore();
+    return setMessage("DEAD 😵");
+  }
+
+  if (props.name === "Workers" && score <= 70) {
+    Workers(score);
   }
 
   function Reset(event) {
     event.preventDefault();
-    setHealth("");
-    setAttackNumber("");
-    setHealthIcon("❤️");
-  }
-
-  function Attack(event) {
-    event.preventDefault();
-    setAttackNumber(Math.trunc(Math.random() * 100) + 1);
-    handleResponse(attackNumber);
+    setScore(props.initialValues.initialScore);
+    setAttackValue(props.initialValues.attackNumber);
+    setMessage("");
   }
   return (
     <div className='Bee'>
       <h1 className='Bee__title'>{props.name}</h1>
       <div className='Bee__img-wrapper'>
-        <img src={props.image} alt='little bee' className='Bee__img-logo' />
+        <img src={beeIcon} alt='little bee' className='Bee__img-logo' />
       </div>
       <h1 className='Bee__header'>
-        {healthIcon} {health} %
+        {healthIcon} {score}%
       </h1>
-      <h2 className='Bee__subheader'>💥 {attackNumber}% </h2>
       <ul>
-        <li>
-          {props.name} need their health to stay above {props.minHealth}%!
-        </li>
-        <li>Alive status: {}</li>
+        <li>Stay Above {props.minHealth}%!</li>
+        <li>{message}</li>
       </ul>
-      <button onClick={Attack}>Attack!</button>
+      <button onClick={handleAttack}>Attack</button>
+      <button onClick={getRandomNumber}>Roll Dice</button>
+
       <button onClick={Reset}>Reset</button>
     </div>
   );
