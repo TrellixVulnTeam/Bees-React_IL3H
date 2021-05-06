@@ -15,7 +15,8 @@ export default function Bee(props) {
     event.preventDefault();
     if (score) {
       setScore(score - attackValue);
-      score <= 0 ? (score = 0) : (score = score);
+      score <= 0 ? setScore(0) : setScore(score - attackValue);
+      console.log(score);
       return score;
     } else {
       setScore(0);
