@@ -36,5 +36,19 @@
     padding: 0.5rem 1rem;
     font-family: "Montserrat", sans-serif;
     text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #fafaae;
+      transform: translateY(-3px);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+      &::after {
+        transform: scaleX(1.4) scaleY(1.6);
+      }
+    }
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    }
   }
 }

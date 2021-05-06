@@ -10,29 +10,33 @@ export default function Bee(props) {
   let [message, setMessage] = useState();
   let [healthIcon, setHealthIcon] = useState("❤️");
 
-  console.log(attackValue);
-
+  //THIS UPDATES THE VALUE OF SCORE WITH EACH HIT
   function handleAttack(event) {
     event.preventDefault();
-    setScore(score - attackValue);
+    if (score) {
+      setScore(score - attackValue);
+      score <= 0 ? (score = 0) : (score = score);
+      return score;
+    } else {
+      setScore(0);
+      return score;
+    }
   }
 
+  //GENERATES RANDOM
   function getRandomNumber(event) {
     event.preventDefault();
     setAttackValue(Math.trunc(Math.random() * 100) + 1);
-    console.log(attackValue);
   }
 
-  if (score < 0) {
-    setScore(0);
-  }
-
+  //RETURNS RESPONSE WHEN LOOSING
   function Lost(score) {
     setHealthIcon("💔");
     setScore();
     return setMessage(`DEAD 😵❗️ YOU SCORED ${score}%`);
   }
 
+  //EACH CONDITIONAL SCENARIO
   if (props.name === "Workers" && score <= 70) {
     Lost(score);
   } else if (props.name === "Drones" && score <= 50) {
@@ -40,6 +44,8 @@ export default function Bee(props) {
   } else if (props.name === "The Queen" && score <= 20) {
     Lost(score);
   }
+
+  //FUNCTION RESTORES INITIAL VALUES
   function Reset(event) {
     event.preventDefault();
     setScore(props.initialValues.initialScore);
